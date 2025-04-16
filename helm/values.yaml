@@ -1,0 +1,39 @@
+namespace: test2
+domain: businessmart.faheemacademy.online
+
+frontend:
+  name: buisness-smart-frontend
+  containerName: frontend-container
+  image: ahmedhoss22/buisness-smart-front:production
+  replicas: 1
+  env:
+    VITE_API_URL: "https://businessmart.faheemacademy.online"
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+  service:
+    name: buisness-smart-service
+    type: ClusterIP
+    port: 80
+
+backend:
+  name: buisness-smart-backend
+  containerName: backend-container
+  image: ahmedhoss22/buisness-smart-back:sha-39afdaf
+  replicas: 1
+  secretName: backend-secret
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+  service:
+    name: buisness-smart-backend-service
+    type: ClusterIP
+    port: 80
