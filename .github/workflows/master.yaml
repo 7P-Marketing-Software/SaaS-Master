@@ -1,0 +1,18 @@
+name: Deploy Buissnesmart master to dev
+on:
+  push:
+    branches: [main]
+
+jobs:
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Deploy to dev server
+        uses: appleboy/ssh-action@master
+        with:
+          username: alhagni
+          host: ${{ secrets.DROPLET2 }}
+          password: ${{ secrets.PASS }}
+          script: 'cd ~ && ./server_deploy_master.sh'
