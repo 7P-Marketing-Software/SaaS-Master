@@ -16,7 +16,9 @@ class SaasSettings extends Model
         'quotes',
         'blog',
         'video_setting',
-        'gamafications'
+        'gamafications',
+        'categories',
+        'attendance_system'
     ];
     protected $casts = [
         'is_active' => 'boolean',
@@ -26,6 +28,8 @@ class SaasSettings extends Model
         'questions_community' => 'boolean',
         'quotes' => 'boolean',
         'blog' => 'boolean',
-        'gamafications' => 'boolean'
+        'gamafications' => 'boolean',
+        'categories' => 'boolean'
+        'attendance_system' => 'boolean',
     ];
 }

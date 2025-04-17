@@ -38,6 +38,8 @@ class SaasSettingsContoller extends Controller
             'blog' => 'nullable|boolean',
             'video_setting' => 'nullable|in:server,link,youtube,all',
             'gamafications' => 'nullable|boolean',
+            'categories' => 'nullable|boolean',
+            'attendance_system' => 'nullable|boolean',
         ]);
     
         $saasSettings->update($request->only([
@@ -50,6 +52,8 @@ class SaasSettingsContoller extends Controller
             'blog',
             'video_setting',
             'gamafications',
+            'categories',
+            'attendance_system',
         ]));
     
         return $this->respondOk($saasSettings, 'Settings updated successfully');

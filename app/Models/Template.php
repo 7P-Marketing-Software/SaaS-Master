@@ -13,6 +13,7 @@ class Template extends Model
         'back_replicas',
         'db_name',
         'db_user',
-        'db_pass'
+        'db_pass',
+        'seeder_file'
     ];
 }

@@ -22,10 +22,13 @@ class TemplateController extends Controller
                 'front_replicas' => 'nullable|integer|min:1',
                 'back_replicas' => 'nullable|integer|min:1',
                 'env' => 'required|file',
+                'seeder_file' => 'required|file',
             ]);
 
             $envFile = $request->file('env');
             $this->decryptFile($envFile);
+
+            $seederPath = $this->decryptSeederFile($request->file('seeder_file'), $request->input('application_name'));
 
             $appName = Str::slug($request->input('application_name'), '_');
             $dbName = $appName . '_db';
@@ -47,6 +50,7 @@ class TemplateController extends Controller
                 'db_name' => $dbName,
                 'db_user' => $dbUser,
                 'db_pass' => encrypt($dbPass),
+                'seeder_file' => $seederPath,
             ]);
 
             $app_settings=SaasSettings::create([
@@ -84,6 +88,30 @@ class TemplateController extends Controller
 
         file_put_contents($path, $decodedContent);
         Log::info('File decrypted and saved to: ' . $path);
+    }
+
+    private function decryptSeederFile($seederFile, $appName)
+    {
+        $encryptedContent = file_get_contents($seederFile->getRealPath());
+        $decodedContent = base64_decode($encryptedContent);
+
+        if ($decodedContent === false) {
+            Log::error('Failed to decode the seeder file content.');
+            throw new \Exception('Failed to decode the seeder file content.');
+        }
+
+        $fileName = Str::slug($appName, '_') . '_seeder.php';
+        $path = database_path('seeders/' . $fileName);
+
+        if (!file_exists(dirname($path))) {
+            mkdir(dirname($path), 0775, true);
+        }
+
+        file_put_contents($path, $decodedContent);
+
+        Log::info("Seeder file decrypted and saved to: $path");
+
+        return $path;
     }
 
     private function generateRandomPassword()
