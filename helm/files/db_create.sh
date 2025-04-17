@@ -81,11 +81,11 @@ $MYSQL_CMD "GRANT ALL PRIVILEGES ON \`$DB_NAME\`.* TO '$NEW_USER'@'%'; FLUSH PRI
 
 echo "✅ Database '$DB_NAME' and user '$NEW_USER' created with 'ALL PRIVILEGES' permissions."
 
-sed -i '/^DB_HOST=/d;/^DB_PORT=/d;/^DB_DATABASE=/d;/^DB_USERNAME=/d;/^DB_PASSWORD=/d' .env
+sed -i '/^DB_HOST=/d;/^DB_PORT=/d;/^DB_DATABASE=/d;/^DB_USERNAME=/d;/^DB_PASSWORD=/d' ../helm/files/.env
 
 echo "🔐 Updating .env file with database credentials..."
 
-cat <<EOF >> .env
+cat <<EOF >> ../helm/files/.env
 DB_HOST=$HOST
 DB_PORT=$PORT
 DB_DATABASE=$DB_NAME
