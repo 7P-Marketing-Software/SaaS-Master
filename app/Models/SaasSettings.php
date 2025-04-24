@@ -29,7 +29,7 @@ class SaasSettings extends Model
         'quotes' => 'boolean',
         'blog' => 'boolean',
         'gamafications' => 'boolean',
-        'categories' => 'boolean'
+        'categories' => 'boolean',
         'attendance_system' => 'boolean',
     ];
 }
